@@ -9,6 +9,8 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 
 from models.fund import Fund
+from models.calculation import Calculation
+from models.market_data import MarketData
 from core.config import settings
 from core.logging import setup_logging
 
@@ -25,7 +27,7 @@ async def lifespan(app: FastAPI):
         client = AsyncIOMotorClient(settings.MONGODB_URL)
         await init_beanie(
             database=client.get_default_database(),
-            document_models=[Fund],
+            document_models=[Fund, Calculation, MarketData],
         )
         logger.info("MongoDB connected, Beanie initialized")
     except Exception as e:
