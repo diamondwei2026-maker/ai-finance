@@ -6,7 +6,7 @@
 | 状态 | 草稿 |
 | 作者 | Claude (ADR Architect) |
 | 日期 | 2025-06-25 |
-| 关联文档 | [前端 ADR](./frontend-债券收益计算工具.md) |
+| 关联文档 | [前端 ADR](./client.md) |
 
 ## 1. 需求概述
 

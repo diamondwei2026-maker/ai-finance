@@ -6,7 +6,7 @@
 | 状态 | 草稿 |
 | 作者 | Claude (ADR Architect) |
 | 日期 | 2025-06-25 |
-| 关联文档 | [后端 ADR](./backend-债券收益计算工具.md) |
+| 关联文档 | [后端 ADR](./server.md) |
 
 ## 1. 需求概述
 
@@ -192,7 +192,7 @@ App.vue
 ### 4.4 目录结构
 
 ```
-frontend/
+client/
 ├── index.html
 ├── package.json
 ├── vite.config.ts
@@ -403,7 +403,7 @@ export const useFundStore = defineStore('fund', () => {
 ## 9. 实施建议
 
 ### 第一阶段：项目骨架
-- `npm create vite@latest frontend -- --template vue-ts`
+- `npm create vite@latest client -- --template vue-ts`
 - 安装依赖：`vue-router` `pinia` `tailwindcss` `@tailwindcss/vite`
 - 配置 Tailwind、TypeScript、Vite
 - 目录结构初始化

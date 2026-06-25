@@ -145,7 +145,7 @@ description: >-
 | 状态     | 草稿 / 已确认                        |
 | 作者     | Claude (ADR Architect)               |
 | 日期     | YYYY-MM-DD                           |
-| 关联文档 | [前端 ADR](./frontend-[项目名称].md) |
+| 关联文档 | [前端 ADR](./client.md) |
 
 ## 1. 需求概述
 
@@ -242,7 +242,7 @@ description: >-
 | 状态     | 草稿 / 已确认                       |
 | 作者     | Claude (ADR Architect)              |
 | 日期     | YYYY-MM-DD                          |
-| 关联文档 | [后端 ADR](./backend-[项目名称].md) |
+| 关联文档 | [后端 ADR](./server.md) |
 
 ## 1. 需求概述
 
