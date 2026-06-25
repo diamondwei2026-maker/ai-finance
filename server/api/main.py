@@ -59,9 +59,10 @@ app.add_middleware(
 
 # ── 路由注册 ──────────────────────────────────────────────────────
 
-from api.routes import funds
+from api.routes import funds, calculations
 
 app.include_router(funds.router, prefix="/api/v1")
+app.include_router(calculations.router, prefix="/api/v1")
 
 
 @app.get("/")

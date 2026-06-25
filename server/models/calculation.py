@@ -14,6 +14,9 @@ class Calculation(Document):
     fund_code: str
     """关联的基金代码。"""
 
+    fund_name: str = ""
+    """基金名称。"""
+
     # ── 8 项收益指标 ──────────────────────────────────────────
 
     nav: float | None = None
@@ -47,6 +50,15 @@ class Calculation(Document):
 
     is_trading_day: bool
     """是否为交易日。"""
+
+    status: str = "processing"
+    """计算状态：processing | completed | failed。"""
+
+    error_message: str | None = None
+    """失败时的错误描述。"""
+
+    disclaimer: str = ""
+    """免责声明文本。"""
 
     created_at: datetime
     """计算结果创建时间（由调用方在写入前赋值）。"""

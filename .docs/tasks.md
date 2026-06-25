@@ -20,7 +20,7 @@
 | 1.2 | 数据模型定义 | 阶段1: 后端数据层 | ✅ done | P0 | 1.1 | [task.md](./tasks/bond-calc-v1/task-1.2/task.md) |
 | 1.3 | 基金查询 API | 阶段1: 后端数据层 | ✅ done | P0 | 1.2 | [task.md](./tasks/bond-calc-v1/task-1.3/task.md) |
 | 2.1 | 计算引擎与市场数据服务 | 阶段2: 计算引擎 | ✅ done | P0 | 1.3 | [task.md](./tasks/bond-calc-v1/task-2.1/task.md) |
-| 2.2 | 计算 API 路由 | 阶段2: 计算引擎 | ⏳ pending | P0 | 2.1 | [task.md](./tasks/bond-calc-v1/task-2.2/task.md) |
+| 2.2 | 计算 API 路由 | 阶段2: 计算引擎 | ✅ done | P0 | 2.1 | [task.md](./tasks/bond-calc-v1/task-2.2/task.md) |
 | 3.1 | 前端 API 层与状态管理 | 阶段3: 前端组件 | ⏳ pending | P0 | 0.2 | [task.md](./tasks/bond-calc-v1/task-3.1/task.md) |
 | 3.2 | 基金输入页与组件 | 阶段3: 前端组件 | ⏳ pending | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.2/task.md) |
 | 3.3 | 计算结果页与组件 | 阶段3: 前端组件 | ⏳ pending | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.3/task.md) |
