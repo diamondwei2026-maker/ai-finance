@@ -14,8 +14,8 @@
 
 | Task ID | 名称 | 阶段 | 状态 | 优先级 | 依赖 | 详情 |
 |---------|------|------|------|--------|------|------|
-| 0.1 | 后端项目脚手架与核心模块 | 阶段0: 项目初始化 | ⏳ pending | P0 | 无 | [task.md](./tasks/bond-calc-v1/task-0.1/task.md) |
-| 0.2 | 前端项目脚手架与基础配置 | 阶段0: 项目初始化 | ⏳ pending | P0 | 无 | [task.md](./tasks/bond-calc-v1/task-0.2/task.md) |
+| 0.1 | 后端项目脚手架与核心模块 | 阶段0: 项目初始化 | ✅ done | P0 | 无 | [task.md](./tasks/bond-calc-v1/task-0.1/task.md) |
+| 0.2 | 前端项目脚手架与基础配置 | 阶段0: 项目初始化 | ✅ done | P0 | 无 | [task.md](./tasks/bond-calc-v1/task-0.2/task.md) |
 | 1.1 | 外部数据源适配（akshare） | 阶段1: 后端数据层 | ⏳ pending | P0 | 0.1 | [task.md](./tasks/bond-calc-v1/task-1.1/task.md) |
 | 1.2 | 数据模型定义 | 阶段1: 后端数据层 | ⏳ pending | P0 | 1.1 | [task.md](./tasks/bond-calc-v1/task-1.2/task.md) |
 | 1.3 | 基金查询 API | 阶段1: 后端数据层 | ⏳ pending | P0 | 1.2 | [task.md](./tasks/bond-calc-v1/task-1.3/task.md) |

@@ -4,7 +4,30 @@
       "Edit(/.claude/skills/ai-master/**)",
       "Edit(/.claude/skills/test-case-generator/**)",
       "Edit(/.claude/skills/coding-prompt-generator/**)",
-      "Edit(/.claude/skills/doc-updater/**)"
+      "Edit(/.claude/skills/doc-updater/**)",
+      "Bash(git commit -m '@ *)",
+      "Bash(git commit *)",
+      "Edit(/.claude/skills/adr-architect/**)",
+      "Bash(Select-String \"server/\")",
+      "Bash(Select-Object -First 1)",
+      "PowerShell(New-Item -ItemType Directory -Force -Path \"server\", \"server/api\", \"server/api/routes\", \"server/core\", \"server/services\", \"server/repositories\", \"server/models\", \"server/external\" | ForEach-Object { $_.FullName })",
+      "Skill(code-review)",
+      "Skill(code-review:*)",
+      "Read(//dev/**)",
+      "Bash(npm create *)",
+      "Bash(npm install *)",
+      "Bash(mkdir -p api components stores types utils locales)",
+      "Bash(touch api/.gitkeep components/.gitkeep stores/.gitkeep types/.gitkeep utils/.gitkeep locales/.gitkeep)",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)",
+      "Read(//d/Users/weij/.claude/**)",
+      "Bash(node -e \"const p = require\\('d:/Users/weij/ai-finance/client/node_modules/@vue/tsconfig/package.json'\\); console.log\\('version:', p.version\\); console.log\\('files:', JSON.stringify\\(p.files || p.exports || 'no files/exports field', null, 2\\)\\)\")",
+      "Bash(node -e \"const pkg = require\\('pinia/package.json'\\); console.log\\('pinia version:', pkg.version\\); console.log\\('main:', pkg.main, 'module:', pkg.module, 'exports:', JSON.stringify\\(pkg.exports, null, 2\\)\\)\")",
+      "Bash(node -e \"try { const p = require\\('pinia'\\); console.log\\('createPinia:', typeof p.createPinia\\); } catch\\(e\\) { console.log\\('ERROR require:', e.message\\); }\")",
+      "Bash(node -e \"const pkg = require\\('d:/Users/weij/ai-finance/client/node_modules/pinia/package.json'\\); console.log\\('pinia version:', pkg.version\\); console.log\\('exports:', JSON.stringify\\(pkg.exports, null, 2\\)\\)\")",
+      "Bash(node -e \"const p = require\\('d:/Users/weij/ai-finance/client/node_modules/pinia'\\); console.log\\('createPinia:', typeof p.createPinia\\); console.log\\('keys:', Object.keys\\(p\\).slice\\(0,20\\)\\)\")",
+      "Bash(node -e \"const pkg = require\\('d:/Users/weij/ai-finance/client/node_modules/@tailwindcss/vite/package.json'\\); console.log\\('version:', pkg.version\\); console.log\\('main:', pkg.main\\); console.log\\('exports:', JSON.stringify\\(pkg.exports, null, 2\\)\\)\")",
+      "Bash(git add *)"
     ]
   }
 }
