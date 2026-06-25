@@ -1,0 +1,3 @@
+# Coding Prompt — Task 1.2: 数据模型定义
+
+> ⏳ 待生成 — 使用 ai-master 继续推进，将自动生成 Coding Prompt。
