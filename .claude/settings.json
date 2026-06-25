@@ -27,7 +27,20 @@
       "Bash(node -e \"const pkg = require\\('d:/Users/weij/ai-finance/client/node_modules/pinia/package.json'\\); console.log\\('pinia version:', pkg.version\\); console.log\\('exports:', JSON.stringify\\(pkg.exports, null, 2\\)\\)\")",
       "Bash(node -e \"const p = require\\('d:/Users/weij/ai-finance/client/node_modules/pinia'\\); console.log\\('createPinia:', typeof p.createPinia\\); console.log\\('keys:', Object.keys\\(p\\).slice\\(0,20\\)\\)\")",
       "Bash(node -e \"const pkg = require\\('d:/Users/weij/ai-finance/client/node_modules/@tailwindcss/vite/package.json'\\); console.log\\('version:', pkg.version\\); console.log\\('main:', pkg.main\\); console.log\\('exports:', JSON.stringify\\(pkg.exports, null, 2\\)\\)\")",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(pip show *)",
+      "Bash(python -c \"import akshare; print\\(akshare.__version__\\)\")",
+      "Bash(pip install *)",
+      "Bash(where python *)",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe --version)",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare; print\\(akshare.__version__\\)\")",
+      "Bash(python -c \"import pandas; print\\(pandas.__version__\\)\")",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -m pip install akshare)",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare as ak; help\\(ak.fund_open_fund_info_em\\)\")",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare as ak; help\\(ak.bond_china_yield\\)\")",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare as ak; df = ak.fund_open_fund_info_em\\(symbol='020741', indicator='单位净值走势'\\); print\\(list\\(df.columns\\)\\); print\\('---'\\); print\\(df.head\\(3\\).to_string\\(\\)\\)\")",
+      "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c ' *)",
+      "Bash(Remove-Item -Force \"d:\\\\Users\\\\weij\\\\ai-finance\\\\server\\\\=1.14.0\" -ErrorAction SilentlyContinue)"
     ]
   }
 }
