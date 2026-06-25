@@ -1,10 +1,10 @@
 ---
 name: coding-prompt-generator
 description: >-
-  为 tasks.md 中某个具体 Task 生成详细的 Coding Prompt，指导 AI 精准实现功能。
-  触发场景：ai-master 检测到某个 Task 的 Coding Prompt 标记为 [待生成] 时自动调用；
+  为某个具体 Task 生成详细的 Coding Prompt，输出到 .docs/tasks/<slug>/task-X.Y/coding-prompt.md。
+  触发场景：ai-master 检测到某个 Task 的 Coding Prompt 文件内容为 [待生成] 时自动调用；
   用户说"生成 Coding Prompt"、"为 Task N 写开发提示"时也可直接调用。
-  前置条件：目标 Task 的测试用例已生成（非 [待生成] 状态）。
+  前置条件：目标 Task 的 test-cases.md 已生成（非 [待生成] 状态）。
 ---
 
 # Coding Prompt 生成器
@@ -23,13 +23,14 @@ description: >-
 
 ### 第一步：读取上下文
 
-读取以下文件：
-- `.docs/tasks.md` — 目标 Task 的描述、验收标准、测试用例
+读取以下文件（根据 ai-master 传入的 slug 和 Task 编号）：
+- `.docs/tasks/<slug>/task-X.Y/task.md` — 目标 Task 的描述、验收标准
+- `.docs/tasks/<slug>/task-X.Y/test-cases.md` — 该 Task 的测试用例
 - `.docs/adr/server.md` — 后端技术栈和规范（如涉及后端）
 - `.docs/adr/client.md` — 前端技术栈和规范（如涉及前端）
 - `.docs/development-plan.md` — 项目结构约定
 
-如果测试用例字段仍为 `[待生成]`，提示先通过 test-case-generator 生成测试用例。
+如果 `test-cases.md` 内容仍为 `[待生成]` 占位，提示先通过 test-case-generator 生成测试用例。
 
 ### 第二步：分析任务
 
@@ -47,7 +48,7 @@ description: >-
 
 ### 第三步：生成 Coding Prompt
 
-按以下结构生成 Coding Prompt，追加到该 Task 的「Coding Prompt」字段中。
+按以下结构生成 Coding Prompt，写入 `coding-prompt.md` 文件。
 
 #### Coding Prompt 模板
 
@@ -106,11 +107,11 @@ description: >-
 - [已知的坑或容易出错的地方]
 ```
 
-### 第四步：更新 tasks.md
+### 第四步：写入 coding-prompt.md
 
-将生成的 Coding Prompt 写入对应 Task 的「Coding Prompt」字段（替换 `[待生成]` 标记），然后保存。
+将生成的 Coding Prompt 写入 `.docs/tasks/<slug>/task-X.Y/coding-prompt.md`（替换 `[待生成]` 占位内容），然后保存。
 
-如果 tasks.md 中该 Task 的「Coding Prompt」字段已有内容且不是 `[待生成]`，则询问用户是否覆盖。
+如果 `coding-prompt.md` 已有完整内容且不是占位标记，则询问用户是否覆盖。
 
 ### 第五步：汇报
 

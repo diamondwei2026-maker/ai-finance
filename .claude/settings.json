@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(/.claude/skills/ai-master/**)",
+      "Edit(/.claude/skills/test-case-generator/**)",
+      "Edit(/.claude/skills/coding-prompt-generator/**)",
+      "Edit(/.claude/skills/doc-updater/**)"
+    ]
+  }
+}

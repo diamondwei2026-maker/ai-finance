@@ -36,7 +36,7 @@ description: >-
 ```
 检查 .docs/tasks.md 是否存在
   → 不存在：调用 Skill("task-planner")，结束本轮
-  → 存在：进入步骤 3
+  → 存在：从 tasks.md 的「需求标识」字段读取 slug，进入步骤 3
 ```
 
 ### 步骤 3：处理用户指定的 Task
@@ -45,11 +45,11 @@ description: >-
 检查用户是否指定了特定 Task（如"执行 Task 3"、"做登录功能"）
   → 未指定：进入步骤 4（自动选择）
   → 已指定：
-    1. 在 tasks.md 中找到对应 Task
-    2. 检查该 Task 的「测试用例」字段：
-       → 标记为 [待生成] 或不存在 → 调用 Skill("test-case-generator")，传入 Task 编号和名称，结束本轮
-    3. 检查该 Task 的「Coding Prompt」字段：
-       → 标记为 [待生成] 或不存在 → 调用 Skill("coding-prompt-generator")，传入 Task 编号和名称，结束本轮
+    1. 在 tasks.md 总览表中找到对应 Task，通过「详情」列获取 task.md 路径（路径含 slug）
+    2. 检查 .docs/tasks/<slug>/task-X.Y/test-cases.md：
+       → 内容为 [待生成] 或不存在 → 调用 Skill("test-case-generator")，传入 slug + Task 编号和名称，结束本轮
+    3. 检查 .docs/tasks/<slug>/task-X.Y/coding-prompt.md：
+       → 内容为 [待生成] 或不存在 → 调用 Skill("coding-prompt-generator")，传入 slug + Task 编号和名称，结束本轮
     4. 两者都已就绪 → 进入步骤 5，对该 Task 执行开发
 ```
 
@@ -66,10 +66,11 @@ description: >-
 
 ```
 对于选定的 Task：
-  → 读取该 Task 的 Coding Prompt 内容
+  → 读取 .docs/tasks/<slug>/task-X.Y/coding-prompt.md 的完整内容
   → 按 Coding Prompt 中的指令执行开发（此时你才真正介入代码编写）
   → 开发完成后：
-    - 将该 Task 状态更新为 done
+    - 将 tasks.md 总览表中该 Task 的状态更新为 done
+    - 将 .docs/tasks/<slug>/task-X.Y/task.md 中的状态更新为 done
     - 进入步骤 7（代码审查）
 ```
 
@@ -115,22 +116,36 @@ Task 进度：
 | 后端 ADR | `.docs/adr/server.md` | adr-architect |
 | 前端 ADR | `.docs/adr/client.md` | adr-architect |
 | 开发计划 | `.docs/development-plan.md` | project-planner |
-| 任务列表 | `.docs/tasks.md` | task-planner |
+| 任务总览表 | `.docs/tasks.md` | task-planner |
+| Task 详情 | `.docs/tasks/<slug>/task-X.Y/task.md` | task-planner |
+| 测试用例 | `.docs/tasks/<slug>/task-X.Y/test-cases.md` | test-case-generator |
+| Coding Prompt | `.docs/tasks/<slug>/task-X.Y/coding-prompt.md` | coding-prompt-generator |
 
-### tasks.md 格式约定
+### tasks.md 格式约定（总览表）
 
 ```markdown
 # 开发任务列表
 
-## Task 1: [任务名称]
-- **状态**: pending | in_progress | done
-- **优先级**: P0 | P1 | P2
-- **依赖**: [依赖的 Task 编号，无依赖则写 无]
-- **描述**: [简要描述该任务要完成什么]
-- **测试用例**: [待生成] 或测试用例内容
-- **Coding Prompt**: [待生成] 或 Coding Prompt 内容
+| 需求标识 | <slug> |
 
-## Task 2: ...
+## 任务总览
+
+| Task ID | 名称 | 阶段 | 状态 | 优先级 | 依赖 | 详情 |
+|---------|------|------|------|--------|------|------|
+| 0.1 | 项目初始化 | 阶段0 | ⏳ pending | P0 | 无 | [task.md](./tasks/<slug>/task-0.1/task.md) |
+| 0.2 | ... | ... | ... | ... | ... | ... |
+```
+
+### Task 目录结构约定
+
+```
+.docs/tasks/<slug>/
+  task-0.1/
+    task.md            ← Task 详情（描述、验收标准、子任务）
+    test-cases.md      ← 测试用例
+    coding-prompt.md   ← Coding Prompt
+  task-0.2/
+    ...
 ```
 
 ## 特殊情况处理
@@ -139,4 +154,5 @@ Task 进度：
 - **用户想回退某阶段**：如果用户说"重新生成 XX"，则删除对应文件，下次调用时自动重新生成
 - **Task 执行失败需要重试**：将该 Task 状态保持为 pending，下次自动选中
 - **用户直接调用子 skill**（如直接说"写 PRD"）：不拦截，但执行完后提醒"可通过 ai-master 继续推进项目"
-- **所有阶段都已完成**：汇报"项目开发已全部完成 🎉"，列出成果清单
+- **所有阶段都已完成**：汇报"项目开发已全部完成 🎉"，列出成果清单，提示可执行 `rm -rf .docs/tasks/<slug>/` 清理 Task 目录
+- **多轮需求迭代**：每轮新的需求对应新的 slug，tasks.md 中保留历史需求记录。旧 slug 的 Task 全部 done 后可删除对应目录

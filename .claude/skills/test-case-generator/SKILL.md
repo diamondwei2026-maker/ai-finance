@@ -1,10 +1,10 @@
 ---
 name: test-case-generator
 description: >-
-  为 tasks.md 中某个具体 Task 生成测试用例，输出到该 Task 的「测试用例」字段。
-  触发场景：ai-master 检测到某个 Task 的测试用例标记为 [待生成] 时自动调用；
+  为某个具体 Task 生成测试用例，输出到 .docs/tasks/<slug>/task-X.Y/test-cases.md。
+  触发场景：ai-master 检测到某个 Task 的测试用例文件内容为 [待生成] 时自动调用；
   用户说"生成测试用例"、"为 Task N 写测试"时也可直接调用。
-  前置条件：.docs/tasks.md 存在且目标 Task 已有明确描述和验收标准。
+  前置条件：.docs/tasks/<slug>/task-X.Y/task.md 存在且目标 Task 已有明确描述和验收标准。
 ---
 
 # 测试用例生成器
@@ -23,7 +23,7 @@ description: >-
 
 ### 第一步：读取目标 Task
 
-从 `.docs/tasks.md` 中找到目标 Task，确认 `@Input` 为 Task 编号或名称。
+根据 ai-master 传入的 slug 和 Task 编号，读取 `.docs/tasks/<slug>/task-X.Y/task.md`。
 
 如果任务描述和验收标准不够清晰，先向用户确认。
 
@@ -41,7 +41,7 @@ description: >-
 
 ### 第三步：生成测试用例
 
-按以下结构生成测试用例，追加到该 Task 的「测试用例」字段中。
+按以下结构生成测试用例，写入 `test-cases.md` 文件。
 
 #### 测试用例格式
 
@@ -66,11 +66,11 @@ description: >-
 ### TC-002: ...
 ```
 
-### 第四步：更新 tasks.md
+### 第四步：写入 test-cases.md
 
-将生成的测试用例写入对应 Task 的「测试用例」字段（替换 `[待生成]` 标记），然后保存。
+将生成的测试用例写入 `.docs/tasks/<slug>/task-X.Y/test-cases.md`（替换 `[待生成]` 占位内容），然后保存。
 
-如果 tasks.md 中该 Task 的「测试用例」字段已有内容且不是 `[待生成]`，则询问用户是否覆盖。
+如果 `test-cases.md` 已有完整内容且不是占位标记，则询问用户是否覆盖。
 
 ### 第五步：汇报
 

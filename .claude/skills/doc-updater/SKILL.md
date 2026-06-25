@@ -26,7 +26,8 @@ description: >-
 - `.docs/adr/server.md` — 后端 ADR（如有技术决策变更需更新）
 - `.docs/adr/client.md` — 前端 ADR（如有技术决策变更需更新）
 - `.docs/development-plan.md` — 开发计划（更新完成状态）
-- `.docs/tasks.md` — 任务列表（确认所有 Task done）
+- `.docs/tasks.md` — 任务总览表（通过「需求标识」获取 slug，确认所有 Task done）
+- `.docs/tasks/<slug>/task-*/task.md` — 各 Task 详情（更新完成状态）
 - `CLAUDE.md` — 项目说明（如有，检查是否需要更新）
 
 检查代码库：
