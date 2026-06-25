@@ -53,10 +53,15 @@ class FatalError(AppException):
 
 
 class ErrorCode:
-    """业务错误码常量。"""
+    """业务错误码常量。
+
+    注意：错误码 40003 分配给 INVALID_CODE_FORMAT（基金代码格式错误），
+    原 DATA_SOURCE_FAILED 移位至 40004。
+    """
 
     FUND_NOT_FOUND: int = 40001       # 基金不存在
     TYPE_MISMATCH: int = 40002        # 基金类型不匹配（非债券型）
-    DATA_SOURCE_FAILED: int = 40003   # 数据源获取失败（可恢复）
+    INVALID_CODE_FORMAT: int = 40003  # 基金代码格式错误
+    DATA_SOURCE_FAILED: int = 40004   # 数据源获取失败（可恢复）
     ALL_SOURCES_FAILED: int = 50001   # 所有数据源不可用（致命）
     CALCULATION_FAILED: int = 50002   # 计算失败

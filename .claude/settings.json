@@ -40,7 +40,10 @@
       "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare as ak; help\\(ak.bond_china_yield\\)\")",
       "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c \"import akshare as ak; df = ak.fund_open_fund_info_em\\(symbol='020741', indicator='单位净值走势'\\); print\\(list\\(df.columns\\)\\); print\\('---'\\); print\\(df.head\\(3\\).to_string\\(\\)\\)\")",
       "Bash(D:/Users/weij/AppData/Local/Programs/Python/Python314/python.exe -c ' *)",
-      "Bash(Remove-Item -Force \"d:\\\\Users\\\\weij\\\\ai-finance\\\\server\\\\=1.14.0\" -ErrorAction SilentlyContinue)"
+      "Bash(Remove-Item -Force \"d:\\\\Users\\\\weij\\\\ai-finance\\\\server\\\\=1.14.0\" -ErrorAction SilentlyContinue)",
+      "Bash(python -c \"from models.fund import Fund; from models.calculation import Calculation; from models.market_data import MarketData; from models.schemas import FundInfoResponse, CalculationRequest, CalculationResponse, ApiResponse; from models import Fund, Calculation, MarketData, ApiResponse, FundInfoResponse, CalculationRequest, CalculationResponse; print\\('OK: all imports successful'\\)\")",
+      "Bash(python -m pip install beanie pydantic)",
+      "Bash(python -c ' *)"
     ]
   }
 }

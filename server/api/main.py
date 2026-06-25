@@ -8,6 +8,7 @@ from loguru import logger
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
 
+from models.fund import Fund
 from core.config import settings
 from core.logging import setup_logging
 
@@ -24,7 +25,7 @@ async def lifespan(app: FastAPI):
         client = AsyncIOMotorClient(settings.MONGODB_URL)
         await init_beanie(
             database=client.get_default_database(),
-            document_models=[],  # 后续 Task 逐步添加 Document 模型
+            document_models=[Fund],
         )
         logger.info("MongoDB connected, Beanie initialized")
     except Exception as e:
@@ -52,6 +53,13 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+# ── 路由注册 ──────────────────────────────────────────────────────
+
+from api.routes import funds
+
+app.include_router(funds.router, prefix="/api/v1")
 
 
 @app.get("/")
