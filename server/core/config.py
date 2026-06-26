@@ -1,9 +1,9 @@
 """配置管理模块 — 从 .env 文件和环境变量读取所有配置项。"""
 
-from typing import ClassVar
+from typing import Annotated, ClassVar
 
 from pydantic import field_validator
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic_settings import BaseSettings, NoDecode, SettingsConfigDict
 
 
 class Settings(BaseSettings):
@@ -13,7 +13,7 @@ class Settings(BaseSettings):
     MONGODB_URL: str  # 必填，无默认值，缺失时启动报错
 
     # CORS
-    CORS_ORIGINS: list[str] = ["http://localhost:5173"]
+    CORS_ORIGINS: Annotated[list[str], NoDecode] = ["http://localhost:5173"]
 
     @field_validator("CORS_ORIGINS", mode="before")
     @classmethod
