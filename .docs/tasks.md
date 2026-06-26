@@ -23,7 +23,7 @@
 | 2.2 | 计算 API 路由 | 阶段2: 计算引擎 | ✅ done | P0 | 2.1 | [task.md](./tasks/bond-calc-v1/task-2.2/task.md) |
 | 3.1 | 前端 API 层与状态管理 | 阶段3: 前端组件 | ✅ done | P0 | 0.2 | [task.md](./tasks/bond-calc-v1/task-3.1/task.md) |
 | 3.2 | 基金输入页与组件 | 阶段3: 前端组件 | ✅ done | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.2/task.md) |
-| 3.3 | 计算结果页与组件 | 阶段3: 前端组件 | ⏳ pending | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.3/task.md) |
+| 3.3 | 计算结果页与组件 | 阶段3: 前端组件 | ✅ done | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.3/task.md) |
 | 4.1 | 后端 CORS 配置与 Render 部署 | 阶段4: 联调部署 | ⏳ pending | P0 | 2.2 | [task.md](./tasks/bond-calc-v1/task-4.1/task.md) |
 | 4.2 | 前端 Vercel 部署 | 阶段4: 联调部署 | ⏳ pending | P0 | 3.2, 3.3 | [task.md](./tasks/bond-calc-v1/task-4.2/task.md) |
 | 4.3 | 前后端联调与异常处理 | 阶段4: 联调部署 | ⏳ pending | P0 | 4.1, 4.2 | [task.md](./tasks/bond-calc-v1/task-4.3/task.md) |
