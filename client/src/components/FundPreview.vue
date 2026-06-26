@@ -90,8 +90,9 @@ function onConfirm(code: string): void {
       <span>{{ ERROR_MESSAGES.TYPE_MISMATCH }}</span>
     </div>
 
-    <!-- 确认按钮 -->
+    <!-- 确认按钮（仅债券型可用） -->
     <button
+      v-if="store.isBondFund"
       type="button"
       class="mt-5 w-full bg-blue-600 hover:bg-blue-700 active:bg-blue-800
              text-white text-sm font-medium rounded-lg py-2.5
@@ -100,5 +101,14 @@ function onConfirm(code: string): void {
     >
       {{ LABELS.CONFIRM_BUTTON }} →
     </button>
+
+    <!-- 非债券型不可确认 -->
+    <div
+      v-else
+      class="mt-5 w-full text-center text-sm text-gray-400 py-2.5
+             bg-gray-100 rounded-lg cursor-not-allowed"
+    >
+      {{ LABELS.BOND_FUND_ONLY }}
+    </div>
   </div>
 </template>

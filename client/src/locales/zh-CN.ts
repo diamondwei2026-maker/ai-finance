@@ -48,6 +48,7 @@ export const LABELS = {
   CONFIRM_BUTTON: '确认并查看详情',
   PAGE_SUBTITLE: '输入基金代码，一键获取收益数据',
   NO_DATA: '暂无数据',
+  BOND_FUND_ONLY: '当前仅支持债券型基金',
   INPUT_ARIA_LABEL: '基金代码',
 } as const;
 

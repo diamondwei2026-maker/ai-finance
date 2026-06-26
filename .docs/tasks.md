@@ -26,7 +26,7 @@
 | 3.3 | 计算结果页与组件 | 阶段3: 前端组件 | ✅ done | P0 | 3.1 | [task.md](./tasks/bond-calc-v1/task-3.3/task.md) |
 | 4.1 | 后端 CORS 配置与 Render 部署 | 阶段4: 联调部署 | ✅ done | P0 | 2.2 | [task.md](./tasks/bond-calc-v1/task-4.1/task.md) |
 | 4.2 | 前端 Vercel 部署 | 阶段4: 联调部署 | ✅ done | P0 | 3.2, 3.3 | [task.md](./tasks/bond-calc-v1/task-4.2/task.md) |
-| 4.3 | 前后端联调与异常处理 | 阶段4: 联调部署 | ⏳ pending | P0 | 4.1, 4.2 | [task.md](./tasks/bond-calc-v1/task-4.3/task.md) |
+| 4.3 | 前后端联调与异常处理 | 阶段4: 联调部署 | ✅ done | P0 | 4.1, 4.2 | [task.md](./tasks/bond-calc-v1/task-4.3/task.md) |
 
 ---
 

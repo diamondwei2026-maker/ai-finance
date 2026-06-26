@@ -44,13 +44,13 @@ const dailyChangeColor = computed<string>(() => {
     <!-- 最新净值 -->
     <div class="bg-gray-50 rounded-lg p-4 text-center">
       <p class="text-xs text-gray-500 mb-1">{{ LABELS.NAV }}</p>
-      <p class="text-2xl font-semibold text-gray-900">{{ navDisplay }}</p>
+      <p class="text-xl sm:text-2xl font-semibold text-gray-900">{{ navDisplay }}</p>
     </div>
 
     <!-- 日涨跌幅 -->
     <div class="bg-gray-50 rounded-lg p-4 text-center">
       <p class="text-xs text-gray-500 mb-1">{{ LABELS.DAILY_CHANGE }}</p>
-      <p class="text-2xl font-semibold" :class="dailyChangeColor">
+      <p class="text-xl sm:text-2xl font-semibold" :class="dailyChangeColor">
         {{ dailyChangeDisplay }}
       </p>
     </div>

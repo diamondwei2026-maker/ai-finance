@@ -76,9 +76,9 @@ function buildMetrics(): MetricItem[] {
       :key="idx"
       class="bg-gray-50 rounded-lg p-4 flex flex-col items-center text-center"
     >
-      <span class="text-2xl mb-1">{{ item.emoji }}</span>
+      <span class="text-xl sm:text-2xl mb-1">{{ item.emoji }}</span>
       <span class="text-xs text-gray-500">{{ item.label }}</span>
-      <span class="text-xl font-semibold text-gray-900 mt-1">{{ item.display }}</span>
+      <span class="text-lg sm:text-xl font-semibold text-gray-900 mt-1">{{ item.display }}</span>
     </div>
   </div>
 </template>

@@ -1,13 +1,18 @@
 <script setup lang="ts">
+import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useFundStore } from '@/stores/fund';
 import { LABELS } from '@/locales/zh-CN';
 import SearchBar from '@/components/SearchBar.vue';
 import FundPreview from '@/components/FundPreview.vue';
+import ErrorAlert from '@/components/ErrorAlert.vue';
 import DisclaimerBar from '@/components/DisclaimerBar.vue';
 
 const router = useRouter();
 const store = useFundStore();
+
+/** 记录最后一次搜索的基金代码，供重试使用。 */
+const lastCode = ref<string | null>(null);
 
 /**
  * 处理基金代码搜索。
@@ -18,7 +23,20 @@ const store = useFundStore();
  * @param code 6 位基金代码。
  */
 async function onSearch(code: string): Promise<void> {
+  lastCode.value = code;
   await store.fetchFundInfo(code);
+}
+
+/**
+ * 重试：清空错误后使用上次输入的代码重新查询。
+ *
+ * 仅在 lastCode 存在时执行重试，防止跨页面错误残留导致的空重试。
+ */
+function onRetry(): void {
+  if (lastCode.value) {
+    store.clearError();
+    store.fetchFundInfo(lastCode.value);
+  }
 }
 
 /**
@@ -47,13 +65,11 @@ function onConfirm(code: string): void {
     <SearchBar :loading="store.loading" @search="onSearch" />
 
     <!-- 全局错误提示（API 返回的业务错误） -->
-    <div
+    <ErrorAlert
       v-if="store.error"
-      role="alert"
-      class="bg-red-50 border border-red-300 text-red-700 rounded-lg p-4 mt-4 text-sm"
-    >
-      {{ store.error }}
-    </div>
+      :message="store.error"
+      @retry="onRetry"
+    />
 
     <!-- 基金预览卡片（查询成功后展示） -->
     <FundPreview :fund-info="store.fundInfo" @confirm="onConfirm" />

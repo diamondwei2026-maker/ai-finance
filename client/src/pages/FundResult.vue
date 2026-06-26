@@ -3,6 +3,7 @@ import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import { useFundStore } from '@/stores/fund';
 import DisclaimerBar from '@/components/DisclaimerBar.vue';
+import ErrorAlert from '@/components/ErrorAlert.vue';
 import ResultHeader from '@/components/ResultHeader.vue';
 import NavGrid from '@/components/NavGrid.vue';
 import YieldMetrics from '@/components/YieldMetrics.vue';
@@ -68,20 +69,11 @@ function onRetry(): void {
     </div>
 
     <!-- ═══ 错误态 ═══ -->
-    <div
+    <ErrorAlert
       v-else-if="store.error"
-      role="alert"
-      class="bg-red-50 border border-red-300 text-red-700 rounded-lg p-4 text-sm"
-    >
-      <p class="mb-3">{{ store.error }}</p>
-      <button
-        class="px-4 py-2 bg-red-600 text-white rounded-lg text-sm font-medium
-               hover:bg-red-700 transition-colors"
-        @click="onRetry"
-      >
-        重试
-      </button>
-    </div>
+      :message="store.error"
+      @retry="onRetry"
+    />
 
     <!-- ═══ 结果态 ═══ -->
     <template v-else-if="store.calculation?.status === 'completed'">
