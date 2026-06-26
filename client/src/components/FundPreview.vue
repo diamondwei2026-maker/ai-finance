@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { FundInfo } from '@/types/api';
 import { useFundStore } from '@/stores/fund';
-import { formatNA, formatPercent } from '@/utils/format';
+import { formatDecimal, formatPercent } from '@/utils/format';
 import { LABELS, ERROR_MESSAGES } from '@/locales/zh-CN';
 
 /**
@@ -67,7 +67,7 @@ function onConfirm(code: string): void {
         <div>
           <span class="text-xs text-gray-400">{{ LABELS.NAV }}</span>
           <p class="text-base font-medium text-gray-800">
-            {{ formatNA(fundInfo.nav) }}
+            {{ formatDecimal(fundInfo.nav) }}
             <span v-if="fundInfo.nav !== null" class="text-xs text-gray-400">{{ LABELS.YUAN }}</span>
           </p>
         </div>

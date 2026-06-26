@@ -1,7 +1,24 @@
-/** 数值格式化工具函数。 */
+/** 数值格式化工具函数。
+ *
+ * 所有数值展示统一保留小数点后两位（遵循 BR-04），
+ * 不足两位补零，超出四舍五入。
+ */
 
 /**
- * 将数值格式化为百分比字符串。
+ * 将数值格式化为保留两位小数的字符串。
+ *
+ * @param value 数值。
+ * @returns 格式化后的字符串（如 1.02），null/undefined 返回 "N/A"。
+ */
+export function formatDecimal(value: number | null | undefined): string {
+  if (value === null || value === undefined) {
+    return 'N/A';
+  }
+  return value.toFixed(2);
+}
+
+/**
+ * 将数值格式化为百分比字符串（保留两位小数）。
  *
  * @param value 百分比数值（如 0.31 表示 0.31%）。
  * @returns 格式化后的字符串，null/undefined 返回 "N/A"。
@@ -10,11 +27,13 @@ export function formatPercent(value: number | null | undefined): string {
   if (value === null || value === undefined) {
     return 'N/A';
   }
-  return `${value}%`;
+  return `${value.toFixed(2)}%`;
 }
 
 /**
  * 将任意值转为展示字符串，null/undefined 显示为 "N/A"。
+ *
+ * 数值类型会保留两位小数；非数值类型直接转字符串。
  *
  * @param value 待展示的值。
  * @returns 字符串形式的值，或 "N/A"。
@@ -22,6 +41,9 @@ export function formatPercent(value: number | null | undefined): string {
 export function formatNA(value: unknown): string {
   if (value === null || value === undefined) {
     return 'N/A';
+  }
+  if (typeof value === 'number') {
+    return value.toFixed(2);
   }
   return String(value);
 }

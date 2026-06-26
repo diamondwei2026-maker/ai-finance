@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { LABELS } from '@/locales/zh-CN';
-import { formatPercent } from '@/utils/format';
+import { formatDecimal, formatPercent } from '@/utils/format';
 
 /**
  * NavGrid — 净值网格组件。
  *
- * 展示最新净值（保留 4 位小数）和日涨跌幅（带正负号颜色）。
+ * 展示最新净值（保留 2 位小数）和日涨跌幅（带正负号颜色）。
+ * 颜色遵循 A 股/中债市场惯例：红涨绿跌（BR-05）。
  */
 
 interface Props {
@@ -16,10 +17,9 @@ interface Props {
 
 const props = defineProps<Props>();
 
-/** 格式化后的净值：保留 4 位小数或 "N/A"。 */
+/** 格式化后的净值：保留 2 位小数或 "N/A"。 */
 const navDisplay = computed<string>(() => {
-  if (props.nav === null || props.nav === undefined) return 'N/A';
-  return props.nav.toFixed(4);
+  return formatDecimal(props.nav);
 });
 
 /** 格式化后的日涨跌幅文本（含正负号 + %）。 */
@@ -30,11 +30,11 @@ const dailyChangeDisplay = computed<string>(() => {
   return pctStr;
 });
 
-/** 日涨跌幅颜色 class。 */
+/** 日涨跌幅颜色 class — 红涨绿跌。 */
 const dailyChangeColor = computed<string>(() => {
   if (props.dailyChangePct === null || props.dailyChangePct === undefined) return 'text-gray-400';
-  if (props.dailyChangePct > 0) return 'text-green-600';
-  if (props.dailyChangePct < 0) return 'text-red-600';
+  if (props.dailyChangePct > 0) return 'text-red-600';
+  if (props.dailyChangePct < 0) return 'text-green-600';
   return 'text-gray-600';
 });
 </script>
