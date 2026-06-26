@@ -1,0 +1,38 @@
+[
+  {
+    "file": "client/src/pages/FundResult.vue",
+    "line": 48,
+    "summary": "Hardcoded page title '计算结果' — LABELS.CALCULATION_RESULT ('计算结果') already exists in zh-CN.ts:46.",
+    "failure_scenario": "If the title text needs to change or be localized, this hardcoded string would be missed while LABELS.CALCULATION_RESULT gets updated. Breaks the single-source-of-truth pattern established by the LABELS constants."
+  },
+  {
+    "file": "client/src/components/MarketRates.vue",
+    "line": 32,
+    "summary": "Redundant null-check wrapping formatPercent — formatPercent already returns 'N/A' for null/undefined internally.",
+    "failure_scenario": "The template reads `props.tenYearTreasury != null ? formatPercent(...) : 'N/A'` but `formatPercent`'s own first line is `if (value === null || value === undefined) return 'N/A'`. The outer ternary duplicates the same logic, making the template longer and harder to read, and if the fallback string ever changes from 'N/A' to something else, this ternary would diverge from the utility."
+  },
+  {
+    "file": "client/src/components/ResultHeader.vue",
+    "line": 37,
+    "summary": "v-if/v-else branching around formatDate is dead weight — formatDate already returns 'N/A' for null/undefined.",
+    "failure_scenario": "The `<time v-if=\"props.dataDate\" …>{{ formatDate(props.dataDate) }}</time><span v-else>N/A</span>` structure is needlessly verbose. If the 'N/A' fallback text changes in formatDate, the template's hardcoded 'N/A' in the v-else branch will diverge. The whole construct can be replaced with `{{ formatDate(props.dataDate) }}`."
+  },
+  {
+    "file": "client/src/components/YieldMetrics.vue",
+    "line": 75,
+    "summary": "buildMetrics() is a plain function invoked in v-for, creating 4 new objects + an array on every render — should be a computed.",
+    "failure_scenario": "Every time Vue re-renders this component (parent state changes, prop changes, etc.), `buildMetrics()` allocates a fresh array of 4 objects. With a `computed`, the result is cached and only recalculated when the watched props actually change, avoiding unnecessary allocations and re-renders of the v-for loop."
+  },
+  {
+    "file": "client/src/components/NavGrid.vue",
+    "line": 21,
+    "summary": "Manually checks null/undefined and returns 'N/A' — reimplements what formatNA already does in format.ts:22.",
+    "failure_scenario": "The null->'N/A' fallback pattern is duplicated across NavGrid, YieldMetrics, MarketRates, and ResultHeader. If the fallback string ever changes (e.g., to '--'), every component must be updated individually instead of changing formatNA once. For nav specifically, the toFixed(4) formatting prevents a direct formatNA call, but the null-check preamble is the same logic."
+  },
+  {
+    "file": "client/src/components/YieldMetrics.vue",
+    "line": 36,
+    "summary": "The pattern `props.X != null ? formatY(props.X) : 'N/A'` is copy-pasted 4 times inside buildMetrics() — a tiny shared helper would collapse the repetition.",
+    "failure_scenario": "Each of the 4 metric entries repeats the same ternary shape with different props and formatters. Adding a 5th metric means copy-pasting the entire pattern again. A one-liner helper like `const fmt = (v: number | null | undefined, f: (n: number) => string) => v != null ? f(v) : 'N/A'` inside the computed would shrink buildMetrics to ~4 lines of data declarations."
+  }
+]

@@ -5,13 +5,17 @@ services:
   - type: web
     name: bond-calc-api
     runtime: python
-    buildCommand: pip install -r server/requirements.txt
-    startCommand: cd server && uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    pythonVersion: "3.11"
+    rootDir: server
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn api.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: MONGODB_URL
         sync: false
+        value: mongodb+srv://<user>:<password>@<cluster>.mongodb.net/ai_finance?retryWrites=true&w=majority
       - key: CORS_ORIGINS
         sync: false
+        value: https://your-app.vercel.app
       - key: ENVIRONMENT
         value: production
       - key: LOG_LEVEL
