@@ -3,6 +3,8 @@
 所有函数异步，异常不在此层捕获——原样抛给 service 层处理。
 """
 
+from __future__ import annotations
+
 from datetime import datetime
 
 from models.fund import Fund

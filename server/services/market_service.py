@@ -7,6 +7,8 @@
 - 异步持久化到 MongoDB（fire-and-forget，不阻塞返回）
 """
 
+from __future__ import annotations
+
 import asyncio
 import datetime as dt
 from typing import Any

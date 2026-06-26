@@ -4,6 +4,8 @@
 即默认按非交易日处理，避免在非交易日给出错误判断。
 """
 
+from __future__ import annotations
+
 import datetime as dt
 
 from loguru import logger

@@ -2,8 +2,9 @@
 
 from contextlib import asynccontextmanager
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from loguru import logger
 from motor.motor_asyncio import AsyncIOMotorClient
 from beanie import init_beanie
@@ -56,6 +57,27 @@ app = FastAPI(
     version=settings.APP_VERSION,
     lifespan=lifespan,
 )
+
+
+# ── 全局异常处理器 ──────────────────────────────────────────────────
+
+
+@app.exception_handler(Exception)
+async def global_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+    """捕获所有未处理的异常，返回统一 ApiResponse 格式。
+
+    避免 FastAPI 默认的原始 500 响应，确保前端始终收到结构化错误。
+    """
+    logger.exception("未处理的异常: {} — {}", request.url.path, exc)
+    return JSONResponse(
+        status_code=500,
+        content={
+            "code": 50000,
+            "message": "服务器内部错误，请稍后重试",
+            "data": None,
+        },
+    )
+
 
 # CORS 中间件 — 仅允许前端需要的 HTTP 方法和请求头
 app.add_middleware(

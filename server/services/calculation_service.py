@@ -4,6 +4,8 @@
 编排层通过 asyncio.gather(return_exceptions=True) 实现数据源并行拉取与单源失败降级。
 """
 
+from __future__ import annotations
+
 import asyncio
 import datetime as dt
 from typing import Any

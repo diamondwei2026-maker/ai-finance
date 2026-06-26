@@ -6,6 +6,8 @@
 数据源：天天基金（东方财富）、雪球、中债信息网（中国债券信息网）。
 """
 
+from __future__ import annotations
+
 import asyncio
 from datetime import datetime
 from typing import Any

@@ -4,6 +4,7 @@
 """
 
 from datetime import datetime
+from typing import Optional
 
 from beanie import Document
 
@@ -19,28 +20,28 @@ class Calculation(Document):
 
     # ── 8 项收益指标 ──────────────────────────────────────────
 
-    nav: float | None = None
+    nav: Optional[float] = None
     """最新单位净值。"""
 
-    daily_change_pct: float | None = None
+    daily_change_pct: Optional[float] = None
     """日涨跌幅（%）。"""
 
-    seven_day_annual_yield: float | None = None
+    seven_day_annual_yield: Optional[float] = None
     """七日年化收益率（%）。"""
 
-    wanfen_income: float | None = None
+    wanfen_income: Optional[float] = None
     """万份收益（元）。"""
 
-    one_month_return: float | None = None
+    one_month_return: Optional[float] = None
     """近 1 月收益率（%）。"""
 
-    three_month_max_drawdown: float | None = None
+    three_month_max_drawdown: Optional[float] = None
     """近 3 月最大回撤（%）。"""
 
-    ten_year_treasury: float | None = None
+    ten_year_treasury: Optional[float] = None
     """10 年期国债收益率（%）。"""
 
-    credit_spread_aa_plus: float | None = None
+    credit_spread_aa_plus: Optional[float] = None
     """信用利差（bp）。"""
 
     # ── 元数据 ────────────────────────────────────────────────
@@ -54,7 +55,7 @@ class Calculation(Document):
     status: str = "processing"
     """计算状态：processing | completed | failed。"""
 
-    error_message: str | None = None
+    error_message: Optional[str] = None
     """失败时的错误描述。"""
 
     disclaimer: str = ""

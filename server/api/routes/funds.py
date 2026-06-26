@@ -5,6 +5,7 @@ from fastapi import APIRouter
 from models.schemas import ApiResponse, FundInfoResponse
 from services.fund_service import query_fund
 from core.exceptions import AppException
+from core.logging import logger
 
 router = APIRouter(prefix="/funds", tags=["基金查询"])
 
@@ -34,3 +35,10 @@ async def get_fund(code: str) -> ApiResponse[FundInfoResponse]:
         return ApiResponse(code=0, message="success", data=fund_info)
     except AppException as e:
         return ApiResponse(code=e.code, message=e.message, data=None)
+    except Exception as e:
+        logger.exception("查询基金 code={} 时发生未预期错误", code)
+        return ApiResponse(
+            code=50000,
+            message="服务器内部错误，请稍后重试",
+            data=None,
+        )

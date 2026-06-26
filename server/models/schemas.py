@@ -4,7 +4,7 @@
 用于 FastAPI 路由层的请求校验和响应序列化。
 """
 
-from typing import Generic, TypeVar
+from typing import Generic, Optional, TypeVar
 
 from pydantic import BaseModel
 
@@ -30,7 +30,7 @@ class ApiResponse(BaseModel, Generic[T]):
     message: str
     """提示信息。"""
 
-    data: T | None = None
+    data: Optional[T] = None
     """响应数据，错误时为 None。"""
 
 
@@ -51,10 +51,10 @@ class FundInfoResponse(BaseModel):
     fund_type: str
     """基金类型。"""
 
-    nav: float | None = None
+    nav: Optional[float] = None
     """最新单位净值。"""
 
-    seven_day_annual_yield: float | None = None
+    seven_day_annual_yield: Optional[float] = None
     """七日年化收益率（%），非货币基金可能为 None。"""
 
     updated_at: str
@@ -87,14 +87,14 @@ class CalculationResponse(BaseModel):
 
     # ── 8 项收益指标 ──────────────────────────────────────────
 
-    nav: float | None = None
-    daily_change_pct: float | None = None
-    seven_day_annual_yield: float | None = None
-    wanfen_income: float | None = None
-    one_month_return: float | None = None
-    three_month_max_drawdown: float | None = None
-    ten_year_treasury: float | None = None
-    credit_spread_aa_plus: float | None = None
+    nav: Optional[float] = None
+    daily_change_pct: Optional[float] = None
+    seven_day_annual_yield: Optional[float] = None
+    wanfen_income: Optional[float] = None
+    one_month_return: Optional[float] = None
+    three_month_max_drawdown: Optional[float] = None
+    ten_year_treasury: Optional[float] = None
+    credit_spread_aa_plus: Optional[float] = None
 
     # ── 元数据 ────────────────────────────────────────────────
 

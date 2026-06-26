@@ -3,6 +3,8 @@
 操作 market_data 集合，记录每次获取的市场利率指标值。
 """
 
+from __future__ import annotations
+
 from datetime import datetime
 
 from models.market_data import MarketData
