@@ -1,5 +1,7 @@
 """配置管理模块 — 从 .env 文件和环境变量读取所有配置项。"""
 
+from typing import ClassVar
+
 from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -28,7 +30,7 @@ class Settings(BaseSettings):
             return [origin.strip() for origin in v.split(",") if origin.strip()]
         return v
 
-    VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+    VALID_LOG_LEVELS: ClassVar[set[str]] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
 
     @field_validator("LOG_LEVEL", mode="before")
     @classmethod
