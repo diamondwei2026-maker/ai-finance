@@ -2,10 +2,11 @@
 
 | 属性 | 值 |
 |------|-----|
-| 版本 | v1.0 |
-| 状态 | 草稿 |
+| 版本 | v1.1 |
+| 状态 | 已实现 |
 | 作者 | Claude (ADR Architect) |
 | 日期 | 2025-06-25 |
+| 更新日期 | 2025-06-26 |
 | 关联文档 | [后端 ADR](./server.md) |
 
 ## 1. 需求概述
@@ -161,6 +162,7 @@ App.vue
     ├── FundInput.vue（首页 — 输入基金代码）
     │   ├── SearchBar.vue（代码输入框 + 查询按钮）
     │   ├── FundPreview.vue（基金基本信息确认卡片，查询后展示）
+    │   ├── ErrorAlert.vue（错误提示横幅，全局复用）
     │   └── DisclaimerBar.vue（免责声明，全局展示）
     │
     └── FundResult.vue（结果页 — 计算并展示）
@@ -169,7 +171,8 @@ App.vue
         ├── YieldMetrics.vue（七日年化 / 万份收益 / 近1月收益 / 近3月最大回撤）
         ├── MarketRates.vue（10年期国债 + 信用利差）
         ├── RefreshButton.vue（刷新计算按钮）
-        └── DisclaimerBar.vue（复用）
+        ├── ErrorAlert.vue（错误提示，复用）
+        └── DisclaimerBar.vue（免责声明，复用）
 ```
 
 ### 4.3 模块划分
@@ -178,8 +181,14 @@ App.vue
 |------|------|------|
 | 页面-输入 | `src/pages/FundInput.vue` | 基金代码输入、查询触发、基本信息预览 |
 | 页面-结果 | `src/pages/FundResult.vue` | 计算结果展示、刷新触发、数据时效性标注 |
+| 组件-搜索 | `src/components/SearchBar.vue` | 基金代码输入框 + 查询按钮 |
+| 组件-预览 | `src/components/FundPreview.vue` | 基金基本信息确认卡片 |
+| 组件-头部 | `src/components/ResultHeader.vue` | 基金名称 + 数据日期标注 |
+| 组件-净值 | `src/components/NavGrid.vue` | 最新净值 + 日涨跌幅展示 |
 | 组件-指标 | `src/components/YieldMetrics.vue` | 收益指标卡片组 |
 | 组件-市场 | `src/components/MarketRates.vue` | 市场利率展示 |
+| 组件-刷新 | `src/components/RefreshButton.vue` | 刷新计算按钮 |
+| 组件-错误 | `src/components/ErrorAlert.vue` | 错误提示横幅（全局复用） |
 | 组件-免责 | `src/components/DisclaimerBar.vue` | 免责声明横幅（全局复用） |
 | API 层 | `src/api/index.ts` | fetch 封装（baseFetch、错误处理、响应类型） |
 | API 接口 | `src/api/funds.ts` | 基金查询接口函数 |
@@ -188,6 +197,7 @@ App.vue
 | 路由 | `src/router/index.ts` | Vue Router 配置（hash 模式） |
 | 类型 | `src/types/api.ts` | API 响应 TypeScript 类型定义 |
 | 工具 | `src/utils/format.ts` | 数值格式化（百分比、货币等） |
+| 文案 | `src/locales/zh-CN.ts` | 中文文案常量 |
 
 ### 4.4 目录结构
 
@@ -216,10 +226,14 @@ client/
     │   ├── SearchBar.vue
     │   ├── FundPreview.vue
     │   ├── ResultHeader.vue
+    │   ├── NavGrid.vue
     │   ├── YieldMetrics.vue
     │   ├── MarketRates.vue
     │   ├── RefreshButton.vue
+    │   ├── ErrorAlert.vue
     │   └── DisclaimerBar.vue
+    ├── locales/
+    │   └── zh-CN.ts             # 中文文案常量
     ├── types/
     │   └── api.ts               # TS 类型定义
     └── utils/

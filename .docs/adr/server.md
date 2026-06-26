@@ -2,10 +2,11 @@
 
 | 属性 | 值 |
 |------|-----|
-| 版本 | v1.0 |
-| 状态 | 草稿 |
+| 版本 | v1.1 |
+| 状态 | 已实现 |
 | 作者 | Claude (ADR Architect) |
 | 日期 | 2025-06-25 |
+| 更新日期 | 2025-06-26 |
 | 关联文档 | [前端 ADR](./client.md) |
 
 ## 1. 需求概述
@@ -202,9 +203,9 @@
 
 | 方法 | 路径 | 说明 | 请求/响应要点 |
 |------|------|------|--------------|
-| GET | `/api/v1/funds/{code}` | 查询基金基本信息 | 返回名称、类型、最新净值、七日年化；非债券型返回 type_mismatch |
-| POST | `/api/v1/calculations` | 触发收益计算 | 请求体 `{"fund_code": "020741"}`；返回计算任务 ID |
-| GET | `/api/v1/calculations/{id}` | 获取计算结果 | 返回 8 项指标 + 数据时效性标注 + 交易日状态 |
+| GET | `/api/v1/funds/{code}` | 查询基金基本信息 | 返回名称、类型、最新净值、七日年化、免责声明；非债券型返回 type_mismatch；格式错误返回 40003 |
+| POST | `/api/v1/calculations` | 触发收益计算（同步执行）| 请求体 `{"fund_code": "020741"}`；同步执行计算，完成后返回 calculation_id + status；已有 5 分钟内缓存直接返回已有结果；进行中的计算返回 processing 状态 |
+| GET | `/api/v1/calculations/{id}` | 获取计算结果 | 支持三种状态返回：processing（计算中）、completed（8 项指标 + 元数据 + 免责声明）、failed（error_message）|
 
 ### 5.3 响应字段说明
 
@@ -241,7 +242,7 @@
 | 集合 | 核心字段 | 索引策略 | 说明 |
 |------|---------|---------|------|
 | `funds` | `fund_code`, `name`, `type`, `updated_at` | `fund_code` 唯一索引 | 基金基本信息缓存 |
-| `calculations` | `fund_code`, `nav`, `daily_change_pct`, `seven_day_annual_yield`, `wanfen_income`, `one_month_return`, `three_month_max_drawdown`, `ten_year_treasury`, `credit_spread_aa_plus`, `data_date`, `is_trading_day`, `created_at` | `fund_code` + `created_at` 复合索引 | 每次计算的完整结果快照 |
+| `calculations` | `fund_code`, `fund_name`, `nav`, `daily_change_pct`, `seven_day_annual_yield`, `wanfen_income`, `one_month_return`, `three_month_max_drawdown`, `ten_year_treasury`, `credit_spread_aa_plus`, `data_date`, `is_trading_day`, `status`, `error_message`, `disclaimer`, `created_at` | `fund_code` + `created_at` 复合索引 | 每次计算的完整结果快照，status 支持 processing/completed/failed 三态 |
 | `market_data` | `indicator_name`, `value`, `unit`, `fetched_at` | `indicator_name` + `fetched_at` 复合索引 | 市场利率数据时间序列 |
 
 ### 6.3 Beanie 文档模型示例
@@ -262,6 +263,7 @@ class Fund(Document):
 
 class Calculation(Document):
     fund_code: str
+    fund_name: str = ""
     nav: float | None = None
     daily_change_pct: float | None = None
     seven_day_annual_yield: float | None = None
@@ -272,6 +274,9 @@ class Calculation(Document):
     credit_spread_aa_plus: float | None = None
     data_date: str
     is_trading_day: bool
+    status: str = "processing"     # processing | completed | failed
+    error_message: str | None = None  # 失败时的错误描述
+    disclaimer: str = ""
     created_at: datetime
 
     class Settings:
@@ -286,7 +291,7 @@ class Calculation(Document):
 ## 7. 非功能性设计
 
 ### 安全
-- **CORS**：仅允许前端 Vercel 域名（生产）或 `localhost:5173`（开发）
+- **CORS**：仅允许前端 Vercel 域名（生产）或 `localhost:5173`（开发），仅开放 GET/POST/OPTIONS 方法及 Content-Type 请求头，allow_credentials 为 true
 - **认证**：MVP 阶段无用户体系，无需认证
 - **环境变量**：MongoDB 连接串、CORS 域名等敏感配置通过 `.env` 注入，不提交代码仓库
 - **输入校验**：基金代码格式校验（6 位数字），FastAPI + Pydantic 自动校验
