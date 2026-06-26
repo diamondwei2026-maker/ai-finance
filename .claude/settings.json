@@ -45,7 +45,12 @@
       "Bash(python -m pip install beanie pydantic)",
       "Bash(python -c ' *)",
       "Bash(npx vue-tsc *)",
-      "Bash(npx vite *)"
+      "Bash(npx vite *)",
+      "Read(//d/Users/weij/**)",
+      "PowerShell(git add server/api/main.py server/core/config.py server/core/logging.py server/.env.example render.yaml .docs/tasks.md \".docs/tasks/bond-calc-v1/task-4.1/\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:4173)",
+      "Bash(grep -o 'https://[^\"'\"'\"'` ,]*' dist/assets/DisclaimerBar-DM9gjt4H.js)",
+      "Bash(taskkill //F //IM node.exe)"
     ]
   }
 }
