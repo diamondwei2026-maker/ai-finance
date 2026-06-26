@@ -27,7 +27,7 @@ class Settings(BaseSettings):
         if isinstance(v, str):
             if not v.strip():
                 return ["http://localhost:5173"]
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
+            return [origin.strip().rstrip("/") for origin in v.split(",") if origin.strip()]
         return v
 
     VALID_LOG_LEVELS: ClassVar[set[str]] = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
