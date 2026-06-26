@@ -44,6 +44,11 @@ export const LABELS = {
   YUAN: '元',
   FUND_INFO: '基金信息',
   CALCULATION_RESULT: '计算结果',
+  FUND_CODE_INPUT_ERROR: '请输入 6 位基金代码',
+  CONFIRM_BUTTON: '确认并查看详情',
+  PAGE_SUBTITLE: '输入基金代码，一键获取收益数据',
+  NO_DATA: '暂无数据',
+  INPUT_ARIA_LABEL: '基金代码',
 } as const;
 
 // ═══════════════════════════════════════════════════════════════════════

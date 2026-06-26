@@ -43,7 +43,9 @@
       "Bash(Remove-Item -Force \"d:\\\\Users\\\\weij\\\\ai-finance\\\\server\\\\=1.14.0\" -ErrorAction SilentlyContinue)",
       "Bash(python -c \"from models.fund import Fund; from models.calculation import Calculation; from models.market_data import MarketData; from models.schemas import FundInfoResponse, CalculationRequest, CalculationResponse, ApiResponse; from models import Fund, Calculation, MarketData, ApiResponse, FundInfoResponse, CalculationRequest, CalculationResponse; print\\('OK: all imports successful'\\)\")",
       "Bash(python -m pip install beanie pydantic)",
-      "Bash(python -c ' *)"
+      "Bash(python -c ' *)",
+      "Bash(npx vue-tsc *)",
+      "Bash(npx vite *)"
     ]
   }
 }
