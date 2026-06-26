@@ -25,14 +25,24 @@ async def lifespan(app: FastAPI):
     # MongoDB 连接 + Beanie 初始化
     try:
         client = AsyncIOMotorClient(settings.MONGODB_URL)
+        db = client.get_default_database()
+
+        # 确保数据库存在 — MongoDB 在首次写入时才真正创建 DB，
+        # 这里通过创建 collections 来触发（已存在则跳过）
+        existing_cols = await db.list_collection_names()
+        for coll_name in ("funds", "calculations", "market_data"):
+            if coll_name not in existing_cols:
+                await db.create_collection(coll_name)
+                logger.info("已创建 MongoDB 集合: {}", coll_name)
+
         await init_beanie(
-            database=client.get_default_database(),
+            database=db,
             document_models=[Fund, Calculation, MarketData],
         )
-        logger.info("MongoDB connected, Beanie initialized")
+        logger.info("MongoDB 数据库 {} 已就绪，Beanie 已初始化", db.name)
     except Exception as e:
-        logger.error("MongoDB connection failed: {}", e)
-        logger.warning("Application running in degraded mode — database unavailable")
+        logger.error("MongoDB 初始化失败: {}", e)
+        logger.warning("应用以降级模式运行 — 数据库不可用")
         # 不崩溃，让应用以降级模式运行
 
     yield
