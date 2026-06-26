@@ -16,8 +16,8 @@ def setup_logging() -> None:
     # 移除默认 handler
     logger.remove()
 
-    # 控制台彩色输出（开发环境使用 DEBUG 级别，生产使用 INFO）
-    console_level = "DEBUG" if settings.DEBUG else "INFO"
+    # 控制台彩色输出（级别由 LOG_LEVEL 环境变量控制）
+    console_level = settings.LOG_LEVEL.upper()
     logger.add(
         sys.stdout,
         colorize=True,
@@ -47,4 +47,4 @@ def setup_logging() -> None:
         level="INFO",
     )
 
-    logger.info("Logging configured successfully")
+    logger.info("Logging configured — level: {}", console_level)

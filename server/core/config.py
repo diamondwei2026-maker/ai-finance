@@ -1,5 +1,6 @@
 """配置管理模块 — 从 .env 文件和环境变量读取所有配置项。"""
 
+from pydantic import field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,6 +12,40 @@ class Settings(BaseSettings):
 
     # CORS
     CORS_ORIGINS: list[str] = ["http://localhost:5173"]
+
+    @field_validator("CORS_ORIGINS", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """将逗号分隔的环境变量字符串解析为列表。
+
+        Render 环境变量只能传字符串，此方法确保
+        "https://a.com,https://b.com" → ["https://a.com", "https://b.com"]
+        空字符串回退到默认值，避免无源列表阻止所有跨域请求。
+        """
+        if isinstance(v, str):
+            if not v.strip():
+                return ["http://localhost:5173"]
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
+
+    VALID_LOG_LEVELS = {"DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"}
+
+    @field_validator("LOG_LEVEL", mode="before")
+    @classmethod
+    def validate_log_level(cls, v):
+        """验证并规范化 LOG_LEVEL 值。"""
+        if not isinstance(v, str) or not v.strip():
+            return "DEBUG"
+        upper = v.strip().upper()
+        if upper not in cls.VALID_LOG_LEVELS:
+            raise ValueError(
+                f"LOG_LEVEL '{v}' 无效，有效值: {', '.join(sorted(cls.VALID_LOG_LEVELS))}"
+            )
+        return upper
+
+    # Environment
+    ENVIRONMENT: str = "development"  # development | production
+    LOG_LEVEL: str = "DEBUG"          # DEBUG | INFO | WARNING | ERROR | CRITICAL
 
     # Cache TTL (seconds)
     CACHE_TTL_FUND: int = 1800       # 基金信息 30min

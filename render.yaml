@@ -1,0 +1,18 @@
+# Render Blueprint — 债券收益计算工具 后端服务
+# 文档: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: bond-calc-api
+    runtime: python
+    buildCommand: pip install -r server/requirements.txt
+    startCommand: cd server && uvicorn api.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: MONGODB_URL
+        sync: false
+      - key: CORS_ORIGINS
+        sync: false
+      - key: ENVIRONMENT
+        value: production
+      - key: LOG_LEVEL
+        value: INFO
